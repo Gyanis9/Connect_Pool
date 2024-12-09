@@ -1,25 +1,63 @@
-#include <cstdio>
-#include <iostream>
-#include <mysql.h>
 
-using namespace std;
+#include "Connection.h"
+#include "ConnectionPool.h"
 
-int main(int argc, char *argv[]) {
-    MYSQL conn;
-    int res;
-    mysql_init(&conn);
-    if (mysql_real_connect(&conn, "localhost", "root", "781680696", "test", 0, nullptr, CLIENT_FOUND_ROWS)) {
-        cout << "connect success" << endl;
-        res = mysql_query(&conn, "insert into test values('user','123456')");
-        if (res) {
-            printf("error\n");
-        } else {
-            printf("OK\n");
+int main() {
+    clock_t begin = clock();
+/*    for (int i = 0; i < 5000; ++i) {
+*//*        Connection conn;
+        char sql[1024] = {0};
+        sprintf(sql, "insert into users(name, age, gender) values('%s', '%d', '%s')", "Li si", 21, "male");
+        conn.connect("127.0.0.1", 3306, "root", "781680696", "chat");
+        conn.update(sql);*//*
+        ConnectionPool *cp = ConnectionPool::getConnectionPool();
+        auto sp = cp->getConnection();
+        char sql[1024] = {0};
+        sprintf(sql, "insert into users(name, age, gender) values('%s', '%d', '%s')", "Li si", 21, "male");
+        sp->update(sql);
+    }*/
+    thread t1([]() {
+        ConnectionPool *cp = ConnectionPool::getConnectionPool();
+        for (int i = 0; i < 1250; ++i) {
+            char sql[1024] = {0};
+            sprintf(sql, "insert into users(name, age, gender) values('%s', '%d', '%s')", "Li si", 21, "male");
+            auto sp = cp->getConnection();
+            sp->update(sql);
         }
-        mysql_close(&conn);
-    } else {
-        cout << "connect failed" << endl;
-    }
+    });
+    thread t2([]() {
+        ConnectionPool *cp = ConnectionPool::getConnectionPool();
+        for (int i = 0; i < 1250; ++i) {
+            char sql[1024] = {0};
+            sprintf(sql, "insert into users(name, age, gender) values('%s', '%d', '%s')", "Li si", 21, "male");
+            auto sp = cp->getConnection();
+            sp->update(sql);
+        }
+    });
+    thread t3([&]() {
+        ConnectionPool *cp = ConnectionPool::getConnectionPool();
+        for (int i = 0; i < 1250; ++i) {
+            char sql[1024] = {0};
+            sprintf(sql, "insert into users(name, age, gender) values('%s', '%d', '%s')", "Li si", 21, "male");
+            auto sp = cp->getConnection();
+            sp->update(sql);
+        }
+    });
+    thread t4([&]() {
+        ConnectionPool *cp = ConnectionPool::getConnectionPool();
+        for (int i = 0; i < 1250; ++i) {
+            char sql[1024] = {0};
+            sprintf(sql, "insert into users(name, age, gender) values('%s', '%d', '%s')", "Li si", 21, "male");
+            auto sp = cp->getConnection();
+            sp->update(sql);
+        }
+    });
+    t1.join();
+    t2.join();
+    t3.join();
+    t4.join();
+    clock_t end = clock();
+    cout << "花费时间 : " << (end - begin) << "ms" << endl;
     return 0;
 }
 
