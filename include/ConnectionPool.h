@@ -41,14 +41,14 @@ private:
     ConnectionPool();
 
     string m_ip;
-    unsigned short m_port;
+    unsigned short m_port{};
     string m_user;
     string m_password;
     string m_dbname;
-    int m_initSize;
-    int m_maxSize;
-    int m_maxSpareTime;
-    int m_connectionTimeout;
+    int m_initSize{};
+    int m_maxSize{};
+    int m_maxSpareTime{};
+    int m_connectionTimeout{};
     queue<Connection *> m_connectQueue;
     mutex m_mtx;
     condition_variable m_cv;

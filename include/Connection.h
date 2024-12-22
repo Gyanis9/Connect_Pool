@@ -28,11 +28,11 @@ public:
 
     void refreshAliveTime();
 
-    clock_t getAliveTime()const;
+    [[nodiscard]] clock_t getAliveTime()const;
 
 private:
     MYSQL *m_con;
-    clock_t m_aliveTime;
+    clock_t m_aliveTime{};
 };
 
 

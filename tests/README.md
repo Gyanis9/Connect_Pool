@@ -1,0 +1,7 @@
+CREATE TABLE `users` (
+`id` INT AUTO_INCREMENT PRIMARY KEY,
+`nickname` VARCHAR(255) NOT NULL,
+`age` INT NOT NULL,
+`sex` ENUM('male', 'female', 'other') NOT NULL,
+`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
