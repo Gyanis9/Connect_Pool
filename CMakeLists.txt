@@ -10,15 +10,17 @@ include_directories(/usr/include/mysql)
 link_directories(/usr/lib/x86_64-linux-gnu)
 
 # 定义可执行文件
-add_executable(Connect_Pool main.cpp
-        ConnectionPool.cpp
-        ConnectionPool.h
-        Connection.cpp
-        Connection.h
-        public.h)
+add_library(Connect_Pool
+        src/ConnectionPool.cpp
+        include/ConnectionPool.h
+        src/Connection.cpp
+        include/Connection.h
+        include/public.h)
 
 # 链接 MySQL 客户端库
 target_link_libraries(Connect_Pool mysqlclient)
+
+add_subdirectory(tests)
 
 
 

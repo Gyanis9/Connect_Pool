@@ -1,6 +1,6 @@
 
-#include "Connection.h"
-#include "ConnectionPool.h"
+#include "../include/Connection.h"
+#include "../include/ConnectionPool.h"
 
 int main() {
     clock_t begin = clock();

@@ -2,7 +2,7 @@
 // Created by guo on 24-12-8.
 //
 
-#include "Connection.h"
+#include "../include/Connection.h"
 
 Connection::Connection() {
     m_con = mysql_init(nullptr);
